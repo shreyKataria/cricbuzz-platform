@@ -5,6 +5,8 @@ const http = require("http");
 const errorHandler = require("./middlewares/error");
 const bodyParser = require("body-parser");
 const userRoute = require("./routes/userRoute");
+const matchRoute = require("./routes/matchRoute");
+const playerRoute = require("./routes/playerRoute");
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.use(bodyParser.json());
 // routes
 
 app.use("/api", userRoute);
+app.use("/api", matchRoute);
+app.use("/api", playerRoute);
 
 // error handler
 app.use(errorHandler);

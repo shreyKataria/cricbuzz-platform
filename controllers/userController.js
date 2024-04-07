@@ -25,18 +25,21 @@ const SignUp = async (req, res, next) => {
   try {
     const uid = await generateUniqueUserId();
 
-    const user = new User({
+    const user = await User.create({
+      // user_ID: uid,
       email,
       username,
       password,
       role: "admin",
     });
-    await user.save();
-    res.status(200).json({
-      status: "Admin Account successfully created",
-      user_ID: user._id,
-      status_code: 200,
-    });
+    // await user.save();
+    // res.status(200).json({
+    //   status: "Admin Account successfully created",
+    //   user_ID: user._id,
+    //   status_code: 200,
+    //   user,
+    // });
+    sendToken(user, 201, res);
   } catch (error) {
     console.log(error.message);
   }
@@ -73,6 +76,7 @@ const sendToken = (user, statusCode, res) => {
     status_code: 200,
     user_id: user.id,
     access_token: token,
+    user,
   });
 };
 module.exports = {
